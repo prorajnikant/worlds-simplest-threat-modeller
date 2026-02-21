@@ -21,7 +21,7 @@ export default function HomePage() {
   const [description, setDescription] = useState("");
   const [refinements, setRefinements] = useState<Refinements>(EMPTY_REFINEMENTS);
   const [apiKey, setApiKey] = useState("");
-  const [provider, setProvider] = useState<"anthropic" | "openai">("anthropic");
+  const [provider, setProvider] = useState<"anthropic" | "openai" | "ollama">("anthropic");
 
   const { state, analyze, reset } = useAnalyze();
 

@@ -20,7 +20,7 @@ const BodySchema = z.object({
     }).optional(),
   }),
   apiKey: z.string().optional(),
-  provider: z.enum(["anthropic", "openai"]).default("anthropic"),
+  provider: z.enum(["anthropic", "openai", "ollama"]).default("anthropic"),
   options: z.object({
     maxThreats: z.number().int().min(1).max(5).default(5),
     refineMode: z.boolean().default(false),
@@ -59,11 +59,19 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  const resolvedKey = apiKey ?? (provider === "anthropic"
-    ? process.env["ANTHROPIC_API_KEY"]
-    : process.env["OPENAI_API_KEY"]);
+  // Ollama is local — no API key needed
+  if (provider !== "ollama") {
+    const resolvedKey = apiKey ?? (provider === "anthropic"
+      ? process.env["ANTHROPIC_API_KEY"]
+      : process.env["OPENAI_API_KEY"]);
+    if (!resolvedKey) return error(500, "INTERNAL_ERROR", "Server API key not configured");
+  }
 
-  if (!resolvedKey) return error(500, "INTERNAL_ERROR", "Server API key not configured");
+  const resolvedKey = provider === "ollama"
+    ? undefined
+    : (apiKey ?? (provider === "anthropic"
+        ? process.env["ANTHROPIC_API_KEY"]
+        : process.env["OPENAI_API_KEY"]));
 
   const pipeline = new LLMThreatPipeline(createProvider({ providerName: provider, apiKey: resolvedKey }));
 

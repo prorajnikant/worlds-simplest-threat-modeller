@@ -1,0 +1,42 @@
+services:
+
+  # ── ThreatLens web app ────────────────────────────────────────────────────
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      # Cloud providers — leave blank to use Ollama only
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-sonnet-4-6}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o}
+      # Ollama — points to the ollama service in this compose network
+      OLLAMA_BASE_URL: http://ollama:11434/v1
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-llama3.1}
+      # Rate limiting
+      RATE_LIMIT_FREE_TIER: ${RATE_LIMIT_FREE_TIER:-3}
+      DISABLE_RATE_LIMIT: ${DISABLE_RATE_LIMIT:-false}
+    depends_on:
+      - ollama
+    restart: unless-stopped
+
+  # ── Ollama local LLM server ───────────────────────────────────────────────
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+    # Uncomment for NVIDIA GPU passthrough:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+
+volumes:
+  ollama_data:
