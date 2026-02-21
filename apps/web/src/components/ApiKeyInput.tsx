@@ -4,8 +4,8 @@ import { useState } from "react";
 
 interface ApiKeyInputProps {
   apiKey: string;
-  provider: "anthropic" | "openai";
-  onChange: (apiKey: string, provider: "anthropic" | "openai") => void;
+  provider: "anthropic" | "openai" | "ollama";
+  onChange: (apiKey: string, provider: "anthropic" | "openai" | "ollama") => void;
 }
 
 export function ApiKeyInput({ apiKey, provider, onChange }: ApiKeyInputProps) {
@@ -21,19 +21,25 @@ export function ApiKeyInput({ apiKey, provider, onChange }: ApiKeyInputProps) {
       <div className="flex gap-2">
         <select
           value={provider}
-          onChange={(e) => onChange(apiKey, e.target.value as "anthropic" | "openai")}
+          onChange={(e) => onChange(apiKey, e.target.value as "anthropic" | "openai" | "ollama")}
           className="flex-shrink-0 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
         >
           <option value="anthropic">Anthropic</option>
           <option value="openai">OpenAI</option>
+          <option value="ollama">Ollama (local)</option>
         </select>
         <div className="relative flex-1">
           <input
             type={visible ? "text" : "password"}
             value={apiKey}
             onChange={(e) => onChange(e.target.value, provider)}
-            placeholder={provider === "anthropic" ? "sk-ant-..." : "sk-..."}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm font-mono focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 pr-10"
+            placeholder={
+              provider === "ollama"
+                ? "No key needed — uses local Ollama"
+                : provider === "anthropic" ? "sk-ant-..." : "sk-..."
+            }
+            disabled={provider === "ollama"}
+            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm font-mono focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 pr-10 disabled:bg-gray-50 disabled:text-gray-400"
             autoComplete="off"
           />
           <button

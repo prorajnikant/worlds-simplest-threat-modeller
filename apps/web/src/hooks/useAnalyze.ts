@@ -10,7 +10,7 @@ type State =
 export function useAnalyze() {
   const [state, setState] = useState<State>({ status: "idle" });
 
-  const analyze = async (input: ArchitectureInput, apiKey?: string, provider: "anthropic" | "openai" = "anthropic") => {
+  const analyze = async (input: ArchitectureInput, apiKey?: string, provider: "anthropic" | "openai" | "ollama" = "anthropic") => {
     setState({ status: "loading" });
     try {
       const res = await fetch("/api/analyze", {

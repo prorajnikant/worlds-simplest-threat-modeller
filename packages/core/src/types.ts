@@ -55,7 +55,7 @@ export interface ThreatReport {
   assumptionsMade: string[];
   threats: Threat[];
   metadata: {
-    provider: "anthropic" | "openai";
+    provider: "anthropic" | "openai" | "ollama";
     model: string;
     pass1TokensUsed?: number;
     pass2TokensUsed?: number;
@@ -79,7 +79,7 @@ export interface LLMCompletionResult {
 }
 
 export interface LLMProvider {
-  readonly name: "anthropic" | "openai";
+  readonly name: "anthropic" | "openai" | "ollama";
   readonly model: string;
   complete(params: LLMCompletionParams): Promise<LLMCompletionResult>;
 }
@@ -132,7 +132,7 @@ export class LLMProviderError extends Error {
 export interface AnalyzeRequest {
   input: ArchitectureInput;
   apiKey?: string;
-  provider?: "anthropic" | "openai";
+  provider?: "anthropic" | "openai" | "ollama";
   options?: Pick<ThreatAnalysisOptions, "maxThreats" | "refineMode">;
 }
 

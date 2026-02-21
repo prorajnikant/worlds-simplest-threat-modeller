@@ -44,7 +44,7 @@ export class LLMThreatPipeline implements ThreatAnalysisPipeline {
       () => this.provider.complete({
         ...buildPass2Prompt(input, pass1Output),
         temperature: opts.pass2Temperature,
-        maxTokens: 2048,
+        maxTokens: 4096,
         signal: AbortSignal.timeout(opts.timeoutMs),
       }),
       opts.maxRetries

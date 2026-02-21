@@ -18,10 +18,10 @@ QUALITY FILTER — before scoring, reject these:
 3. REJECT any threat whose scenario does not name a specific component from the architecture.
 
 MITIGATION REQUIREMENT — for each threat you keep:
-Provide 1–3 mitigations. Each mitigation must name the specific component, library, service, or architectural pattern to change. "Improve security" is FORBIDDEN. "Add row-level security to the PostgreSQL schemas using per-tenant RLS policies enforced by a session variable set at connection time" is the level of specificity required.
+Provide 1–3 mitigations. Each mitigation must be ONE concise sentence naming the specific component, library, service, or config change required. "Improve security" is FORBIDDEN. "Enforce per-tenant RLS on PostgreSQL using SET LOCAL app.tenant_id before every query" is the required level of specificity. Keep each mitigation under 30 words.
 
 BUSINESS IMPACT — for each threat you keep:
-Write 1–2 sentences describing the business impact in terms of revenue loss, compliance violations (name the specific regulation: GDPR, HIPAA, PCI-DSS, SOC2), reputational damage, or operational disruption.
+Write exactly 1 sentence naming the specific compliance regulation (GDPR, HIPAA, PCI-DSS, SOC2) or business consequence. Keep it under 30 words.
 
 OUTPUT FORMAT — return exactly this JSON object and nothing else:
 {

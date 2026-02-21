@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const Pass1ThreatSchema = z.object({
   id: z.string().regex(/^T\d+$/),
-  title: z.string().min(5).max(80),
+  title: z.string().min(5).max(120),
   strideCategory: z.enum([
     "Spoofing", "Tampering", "Repudiation",
     "Information Disclosure", "Denial of Service", "Elevation of Privilege",

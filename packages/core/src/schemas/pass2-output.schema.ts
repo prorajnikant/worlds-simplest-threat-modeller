@@ -11,7 +11,7 @@ const DreadScoreSchema = z.object({
 
 export const Pass2ThreatSchema = z.object({
   id: z.string(),
-  title: z.string().min(5).max(80),
+  title: z.string().min(5).max(120),
   strideCategory: z.enum([
     "Spoofing", "Tampering", "Repudiation",
     "Information Disclosure", "Denial of Service", "Elevation of Privilege",
