@@ -1,0 +1,15 @@
+{
+  "name": "worlds-simplest-threat-modeller",
+  "private": true,
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "dev": "pnpm --filter @threat-modeller/web dev",
+    "build": "pnpm --filter @threat-modeller/core build && pnpm --filter @threat-modeller/web build",
+    "lint": "pnpm -r lint",
+    "type-check": "pnpm -r type-check",
+    "test": "pnpm -r test"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}
